@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MyBatis 与 Spring 的整合 | 新人来也匆匆的博客</title>
+    <meta property="og:title" content="MyBatis 与 Spring 的整合 - 新人来也匆匆的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-07-15T01:55:10&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-07-15T01:55:10&#43;08:00">
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="MyBatis 与 Spring 的整合">
+        
+    <meta name="author" content="新人来也匆匆">
+    <meta property="og:url" content="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://githubcy0522.github.io/">
+                        新人来也匆匆的博客
+                    </a>
+                
+                <p class="description">热爱互联网IT行业，从事java。梦想着从菜鸟晋级老鸟</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://githubcy0522.github.io/">首页</a>
+                    
+                    <a  href="https://githubcy0522.github.io/archives/" title="归档">归档</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">MyBatis 与 Spring 的整合</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年7月15日
+                        </date>
+                        
+                        <div class="post-meta">
+                            <span>|</span>
+                            
+                                <span class="meta-category"><a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a></span>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="mybatis-与-spring-的整合">MyBatis 与 Spring 的整合</h1>
+
+<h2 id="1-spring-如何-整合-mybatis">1.Spring 如何 整合 mybatis</h2>
+
+<p>spring 开发完 3.2.13 版本后，mybatis 3.2.2 尚未开发完毕，mybatis 3.2.2 自己开发一个整合 spring 3.2.13 的驱动包，<u>mybatis-spring-1.2.0.jar。</u></p>
+
+<h3 id="整合思路"><strong>整合思路：</strong></h3>
+
+<ol>
+<li>spring 提供 DI 和 AOP 整合 mybatis 框架并且 mybatis 3.2.2 开发 mybatis-spring-1.2.0.jar 升级了他自己核心接口和类，以便于与 spring 整合。（spring 通过 ioc 、di 管理其他框架的对象）</li>
+</ol>
+
+<p>Spring ioc 管理 mybatis框架： <strong>SqlSessionTemplate</strong>、<strong>SqlSessionFactoryBean</strong></p>
+
+<p><strong>SqlSessionFactoryBean</strong> 为整合应用提供 Sqlsession 对象资源</p>
+
+<p><strong>SqlSessionTemplate</strong> 负责管理 MyBatis 的 SqlSession，调用 SQL 映射语句，实现对数据库的访问</p>
+
+<p><strong>MapperFactoryBean</strong> 根据指定 Mapper 接口生成 Bean 实例</p>
+
+<p><strong>MapperScannerConfigurer</strong> 根据指定包批量扫描 Mapper 接口并生成实例</p>
+
+<h3 id="整合步骤">整合步骤：</h3>
+
+<h4 id="搭建-mybatis-和-spring-整合的框架环境">搭建 mybatis 和 spring 整合的框架环境</h4>
+
+<h5 id="1-导入俩个框架驱动包和配置文件">1.导入俩个框架驱动包和配置文件</h5>
+
+<p><strong>驱动包：</strong></p>
+
+<p>aopalliance-1.0.jar
+asm-3.3.1.jar
+aspectjweaver-1.6.9.jar
+cglib-2.2.2.jar
+commons-logging-1.1.3.jar
+javassist-3.17.1-GA.jar
+log4j-1.2.16.jar
+mybatis-3.2.2.jar
+mybatis-spring-1.2.0.jar
+mysql-connector-java-5.1.0-bin(1).jar
+slf4j-api-1.7.5.jar
+slf4j-log4j12-1.7.5.jar
+spring-aop-3.2.13.RELEASE.jar
+spring-beans-3.2.13.RELEASE.jar
+spring-context-3.2.13.RELEASE.jar
+spring-core-3.2.13.RELEASE.jar
+spring-expression-3.2.13.RELEASE.jar
+spring-tx-3.2.13.RELEASE.jar
+commons-dbcp-1.4.jar
+commons-pool-1.6.jar
+spring-jdbc-3.2.13.RELEASE.jar
+spring-orm-3.2.13.RELEASE.jar</p>
+
+<p><strong>配置文件：</strong></p>
+
+<p>applicationContext.xml</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- spring配置文件beans根元素 --&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/aop
+      	 				   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       					   http://www.springframework.org/schema/beans
+           				   http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+           
+&lt;/beans&gt;
+
+</code></pre>
+
+<p>database.properties
+log4j.properties
+mybatis3.2.2-config.xml</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- 引入DTD头部声明 --&gt;
+&lt;!DOCTYPE configuration
+	PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+		&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;!--mybatis配置文件 
+	1.连接数据库相关
+	2.引入SQL映射
+	3.mybatis框架行为
+ --&gt;
+&lt;configuration&gt;
+	&lt;!-- 1.引入数据库配置文件database.properties --&gt;
+	&lt;properties resource=&quot;database.properties&quot; /&gt; 
+	&lt;!--log4j日志文件配置  settings:引入公共文件 log4j日志文件配置 --&gt;
+ 	&lt;settings&gt;
+ 		&lt;!-- 配置框架日志 --&gt;
+		&lt;setting name=&quot;logImpl&quot; value=&quot;LOG4J&quot; /&gt;
+		&lt;!-- 自动映射 --&gt;
+		&lt;setting name=&quot;autoMappingBehavior&quot; value=&quot;FULL&quot;/&gt;
+	&lt;/settings&gt;
+	&lt;typeAliases&gt;
+		&lt;!-- &lt;typeAlias type=&quot;cn.mybatis.entity.User&quot; alias=&quot;User&quot;/&gt; --&gt;
+		&lt;!-- 扫描实体类,生成实体包下的别名(类名) --&gt;
+		&lt;package name=&quot;&quot;/&gt;
+	&lt;/typeAliases&gt;
+	&lt;!--1.连接数据库相关  --&gt;
+	&lt;environments default=&quot;mysql&quot;&gt;
+		&lt;environment id=&quot;mysql&quot;&gt;
+			&lt;transactionManager type=&quot;JDBC&quot; /&gt;
+			&lt;dataSource type=&quot;POOLED&quot;&gt;
+				&lt;property name=&quot;driver&quot; value=&quot;${driver}&quot;/&gt;
+ 				&lt;property name=&quot;url&quot; value=&quot;${url}&quot;/&gt;
+ 				&lt;property name=&quot;username&quot; value=&quot;${user}&quot;/&gt;
+ 				&lt;property name=&quot;password&quot; value=&quot;${password}&quot;/&gt;
+			&lt;/dataSource&gt;
+		&lt;/environment&gt;
+	&lt;/environments&gt;
+    
+&lt;/configuration&gt;
+</code></pre>
+
+<h4 id="2-编写实体类-dao接口和-sql-映射文件">2.编写实体类、Dao接口和 SQL 映射文件</h4>
+
+<p>Role.java
+User.java</p>
+
+<p>Dao接口：</p>
+
+<pre><code class="language-java">/**
+ * 
+ */
+package cn.mybatisspring.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.mybatisspring.entity.User;
+
+
+
+/**
+ * 用户Dao接口
+ * 
+ * @author Administrator
+ * 
+ */
+public interface UserDao {
+
+	/**
+	 * 查询所有的用户信息
+	 * 
+	 * @return
+	 */
+	List&lt;User&gt; getUserList();
+
+	/**
+	 * 根据Id查询用户信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	User getUserById(Long id);
+
+	/**
+	 * 根据姓名和密码查询用户信息
+	 * 
+	 * @param name
+	 * @param pwd
+	 * @return
+	 */
+	User getUserByNamePwd(@Param(&quot;name&quot;) String name, @Param(&quot;pwd&quot;) String pwd);
+
+	User getUserByName(@Param(&quot;name&quot;)String name);
+	
+	/**
+	 * 动态、分页查询用户列表
+	 * 
+	 * @param name
+	 * @param rid
+	 * @param currentPage
+	 *            起始行数
+	 * @param pageSize
+	 *            每页显示最大条数
+	 * @return
+	 */
+	List&lt;User&gt; getUserByNameRId(@Param(&quot;name&quot;) String name,
+			@Param(&quot;rid&quot;) Integer rid,
+			@Param(&quot;currentPage&quot;) Integer currentPage,
+			@Param(&quot;pageSize&quot;) Integer pageSize);
+
+	/**
+	 * 插入用户
+	 * 
+	 * @param user
+	 * @return
+	 */
+	// Integer insert(User user);
+	Integer insert(List&lt;User&gt; userList);
+
+	/**
+	 * 删除用户
+	 * 
+	 * @param uid
+	 * @return
+	 */
+	Integer delete(Long uid);
+
+	/**
+	 * 修改用户
+	 * 
+	 * @param user
+	 * @return
+	 */
+	Integer update(User user);
+
+	/**
+	 * 查询('1981','1982','1987')出生的学生
+	 * 
+	 * @param brArray
+	 * @return
+	 */
+	// List&lt;User&gt; getUserListByBR(String[] brArray);
+	// List&lt;User&gt; getUserListByBR(List&lt;String&gt; userList);
+	List&lt;User&gt; getUserListByBR(Map&lt;String, Object&gt; maps);
+}
+
+</code></pre>
+
+<p>SQL映射文件:</p>
+
+<p>userDao-Mapper:</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- SQL映射文件,描述接口中 方法的SQL语句 --&gt;
+&lt;!DOCTYPE mapper
+	PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+		&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;!--namespace 映射哪个dao接口 --&gt;
+&lt;mapper namespace=&quot;cn.mybatisspring.dao.UserDao&quot;&gt;
+	&lt;!-- resultType  表中一行在java数据类型 --&gt;
+	&lt;!-- ========查询 start======= --&gt;
+	&lt;select id=&quot;getUserList&quot; resultType=&quot;cn.mybatisspring.entity.User&quot;&gt;
+		select * from smbms_user
+	&lt;/select&gt;
+	
+	&lt;select id=&quot;getUserById&quot; resultType=&quot;User&quot;&gt;
+		select * from smbms_user where id = #{id}
+	&lt;/select&gt;
+	
+	&lt;select id=&quot;getUserByNamePwd&quot; resultType=&quot;User&quot;&gt;
+		select * from smbms_user where userName = #{name} and userPassword = #{pwd}
+	&lt;/select&gt;
+	
+	&lt;select id=&quot;getUserByName&quot; resultType=&quot;User&quot;&gt;
+		select * from smbms_user where userName = #{name}
+	&lt;/select&gt;
+	
+	&lt;select id=&quot;getUserByNameRId&quot; resultType=&quot;User&quot; resultMap=&quot;userResultMap&quot;&gt;
+		&lt;!-- select r.roleName as rn,u.* from smbms_user u inner join smbms_role r on u.userRole = r.id
+		where u.userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;) and r.id = #{rid} --&gt;
+		
+		&lt;!-- select u.*,r.*,r.id as r_id,
+		r.`createdBy` as r_createdBy,
+		r.`creationDate` as r_creationDate 
+		from smbms_user u inner join smbms_role r on u.userRole = r.id 
+		where u.userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;) and r.id = #{rid}  --&gt;
+		
+		&lt;!--
+			1.if
+					
+		select u.*,r.*,r.id as r_id,
+		r.`createdBy` as r_createdBy,
+		r.`creationDate` as r_creationDate 
+		from smbms_user u inner join smbms_role r on u.userRole = r.id 
+		where 1=1
+		&lt;if test=&quot;name != null and name != ''&quot;&gt;
+			and u.userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;)
+		&lt;/if&gt;
+		&lt;if test=&quot;rid != null and rid != 0&quot;&gt;
+			and r.id = #{rid}
+		&lt;/if&gt; --&gt;
+		
+		&lt;!-- 2.if+where --&gt;
+&lt;!-- 	select u.*,r.*,r.id as r_id,
+		r.`createdBy` as r_createdBy,
+		r.`creationDate` as r_creationDate 
+		from smbms_user u inner join smbms_role r on u.userRole = r.id 
+		&lt;where&gt;
+			&lt;if test=&quot;name != null and name != ''&quot;&gt;
+				and u.userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;)
+			&lt;/if&gt;
+			&lt;if test=&quot;rid != null and rid != 0&quot;&gt;
+				and r.id = #{rid}
+			&lt;/if&gt;
+		&lt;/where&gt; --&gt;
+		
+		&lt;!-- 3.if + trim --&gt;
+		select u.*,r.*,r.id as r_id,
+		r.`createdBy` as r_createdBy,
+		r.`creationDate` as r_creationDate 
+		from smbms_user u inner join smbms_role r on u.userRole = r.id
+		&lt;trim prefix=&quot;where&quot; prefixOverrides=&quot;and &quot;&gt;
+			&lt;if test=&quot;name != null and name != ''&quot;&gt;
+				and u.userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;)
+			&lt;/if&gt;
+			&lt;if test=&quot;rid != null and rid != 0&quot;&gt;
+				and r.id = #{rid}
+			&lt;/if&gt;
+		&lt;/trim&gt;
+		order by u.`creationDate` desc limit #{currentPage},#{pageSize}
+	&lt;/select&gt;
+	
+	&lt;!-- resultMap 场景 1.返回列名和属性名不一致时  2.多表连接查询时
+		 r.roleName as roleName,u.*
+		 u.*,只有u中有id
+		 
+		 resultMap 结果集映射
+		 列名 -&gt; 属性名  一一映射
+	 --&gt;
+	&lt;resultMap type=&quot;User&quot; id=&quot;userResultMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+		&lt;result column=&quot;rn&quot; property=&quot;roleName&quot; /&gt;
+		&lt;!-- 使用嵌套映射
+			association 多对一 如学生/年级
+			collection 一对多,多对多
+			
+			u.*,r.*,r.id as r_id
+			id  id
+		 --&gt;
+		&lt;association property=&quot;role&quot; javaType=&quot;Role&quot;&gt;
+			&lt;id column=&quot;r_id&quot; property=&quot;id&quot;/&gt;
+			&lt;result column=&quot;r_createdBy&quot; property=&quot;createdBy&quot;/&gt;
+			&lt;result column=&quot;r_creationDate&quot; property=&quot;creationDate&quot;/&gt;
+		&lt;/association&gt;
+	&lt;/resultMap&gt;
+	&lt;!-- ========查询 end======= --&gt;
+	
+	&lt;!-- ========插入 start======= --&gt;
+	
+	&lt;insert id=&quot;insert&quot;&gt;
+		&lt;!-- INSERT INTO smbms_user(`id`,`userCode`,`userName`,`userPassword`,`gender`,`birthday`,`phone`,`address`,`userRole`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`)
+		VALUES(DEFAULT,#{userCode},#{userName},#{userPassword},#{gender},#{birthday},#{phone},#{address},#{userRole},#{createdBy},#{creationDate},#{modifyBy},#{modifyDate}) --&gt;
+		INSERT INTO smbms_user(`id`,`userCode`,`userName`,`userPassword`,`gender`,`birthday`,`phone`,`address`,`userRole`,`createdBy`,`creationDate`,`modifyBy`,`modifyDate`)
+		VALUES
+		&lt;foreach collection=&quot;list&quot; item=&quot;user&quot; separator=&quot;,&quot;&gt;
+			(DEFAULT,#{user.userCode},#{user.userName},#{user.userPassword},#{user.gender},#{user.birthday},#{user.phone},#{user.address},#{user.userRole},#{user.createdBy},#{user.creationDate},#{user.modifyBy},#{user.modifyDate})
+		&lt;/foreach&gt;
+	&lt;/insert&gt;
+	&lt;!-- ========插入 end======= --&gt;
+	
+	&lt;!-- ========删除 start======= --&gt;
+	&lt;delete id=&quot;delete&quot; parameterType=&quot;User&quot;&gt;
+		delete from smbms_user where id = #{uid}
+	&lt;/delete&gt;
+	&lt;!-- ========删除 end======= --&gt;
+	
+	&lt;!-- ========修改 start======= --&gt;
+	&lt;update id=&quot;update&quot; parameterType=&quot;User&quot;&gt;
+		&lt;!-- update smbms_user set `userRole`=#{userRole} where `userName`=#{userName} --&gt;
+		
+		&lt;!-- 动态修改 set 	trim --&gt;
+			&lt;!-- update smbms_user set 
+			&lt;trim suffixOverrides=&quot;,&quot;&gt;
+			&lt;if test=&quot;userRole !=null and userRole !=''&quot;&gt;
+				`userRole`=#{userRole},
+			&lt;/if&gt;
+			&lt;/trim&gt;
+			 where `userName`=#{userName} --&gt;
+		&lt;!-- if + set --&gt;
+			update smbms_user
+			&lt;set&gt;
+				&lt;if test=&quot;userRole !=null and userRole !=''&quot;&gt;
+				`userRole`=#{userRole},
+				&lt;/if&gt;
+				&lt;if test=&quot;gender !=null and gender !=0&quot;&gt;
+				`gender`=#{gender},
+				&lt;/if&gt;
+			&lt;/set&gt;
+				where `userName`=#{userName}
+	&lt;/update&gt;
+	&lt;!-- ========修改 end======= --&gt;
+	
+	&lt;!-- ========foreach start======= --&gt;
+	&lt;select id=&quot;getUserListByBR&quot; resultType=&quot;User&quot;&gt;
+		&lt;!-- select * from smbms_user where year(`birthday`) in 
+		&lt;foreach collection=&quot;array&quot; item=&quot;br&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;
+			#{br}
+		&lt;/foreach&gt; --&gt;
+		&lt;!-- select * from smbms_user where year(`birthday`) in 
+		&lt;foreach collection=&quot;list&quot; item=&quot;br&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;
+			#{br}
+		&lt;/foreach&gt; --&gt;
+		select * from smbms_user where year(`birthday`) in 
+		&lt;foreach collection=&quot;brlist&quot; item=&quot;br&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;
+			#{br}
+		&lt;/foreach&gt;
+		and userName like CONCAT(&quot;%&quot;,#{name},&quot;%&quot;)
+	&lt;!-- ========foreach end======= --&gt;
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+
+<h4 id="3-编写dao接口实现类">3.编写Dao接口实现类</h4>
+
+<pre><code class="language-java">public class UserDaoImpl implements UserDao{
+    private SqlSessionTemplate sqlSessionTemplate;
+    
+    public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+    
+    ......
+}
+</code></pre>
+
+<h4 id="4-使用数据映射器-数据映射器扫描类完成-dao-接口生成-bean-实例">4.使用数据映射器、数据映射器扫描类完成 dao 接口生成 bean 实例</h4>
+
+<pre><code class="language-xml">&lt;!-- 定义数据映射器，将某包下的Dao接口生成bean实例 --&gt;
+       &lt;!-- &lt;bean id=&quot;roleDao&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+       		&lt;property name=&quot;mapperInterface&quot; value=&quot;cn.mybatisspring.dao.RoleDao&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot;  ref=&quot;sqlSessionTemplate&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot;/&gt;	
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器扫描类,将某包下的所有Dao接口生成bean实例
+       		bean id 名字叫什么?
+       		roleDao
+       		userDao
+        --&gt;
+       &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+       		&lt;property name=&quot;basePackage&quot; value=&quot;cn.mybatisspring.dao&quot; /&gt;
+       		&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+</code></pre>
+
+<h4 id="在spring配置文件加载与定义">在spring配置文件加载与定义：</h4>
+
+<pre><code class="language-xml">&lt;!-- 加载database.properties文件 --&gt;
+       &lt;bean class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;
+       		&lt;property name=&quot;location&quot;&gt;
+       			&lt;value&gt;classpath:database.properties&lt;/value&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 数据源对象 --&gt;
+       &lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot; destroy-method=&quot;clone&quot;&gt;
+       		&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/smbms?useUnicode=true&amp;amp;characterEncoding=utf-8&quot; /&gt;
+       		&lt;property name=&quot;driverClassName&quot;  value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+       		&lt;property name=&quot;username&quot;  value=&quot;${user}&quot;/&gt;
+       		&lt;property name=&quot;password&quot;  value=&quot;${password}&quot;/&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义SqlSessionFactoryBean --&gt;
+       &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+       		
+       		&lt;!-- 加载数据源 --&gt;
+       		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+       		&lt;!-- 加载mybatis配置文件 --&gt;
+       		&lt;property name=&quot;configLocation&quot;&gt;
+       			&lt;value&gt;classpath:mybatis3.2.2-config.xml&lt;/value&gt;
+       		&lt;/property&gt;
+       		
+       		&lt;!-- 扫描实体包,生成别名 --&gt;
+       		&lt;property name=&quot;typeAliasesPackage&quot; value=&quot;cn.mybatisspring.entity&quot;&gt;&lt;/property&gt;
+       		
+       		&lt;!-- 加载SQL映射文件 --&gt;
+       		&lt;property name=&quot;mapperLocations&quot;&gt;
+       			&lt;list&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/UserDao-Mapper.xml&lt;/value&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/RoleDao-Mapper.xml&lt;/value&gt;
+       			&lt;/list&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义sqlSessionTemplate实例 --&gt;
+       &lt;bean id=&quot;sqlSessionTemplate&quot; class=&quot;org.mybatis.spring.SqlSessionTemplate&quot;&gt;
+       		&lt;constructor-arg ref=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- &lt;bean id=&quot;userDao&quot; class=&quot;cn.mybatisspring.dao.impl.UserDaoImpl&quot;&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot; ref=&quot;sqlSessionTemplate&quot;/&gt;
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器，将某包下的Dao接口生成bean实例 --&gt;
+       &lt;!-- &lt;bean id=&quot;roleDao&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+       		&lt;property name=&quot;mapperInterface&quot; value=&quot;cn.mybatisspring.dao.RoleDao&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot;  ref=&quot;sqlSessionTemplate&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot;/&gt;	
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器扫描类,将某包下的所有Dao接口生成bean实例
+       		bean id 名字叫什么?
+       		roleDao
+       		userDao
+        --&gt;
+       &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+       		&lt;property name=&quot;basePackage&quot; value=&quot;cn.mybatisspring.dao&quot; /&gt;
+       		&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义UserService 实例 --&gt;
+       &lt;bean id=&quot;userService&quot; class=&quot;cn.mybatisspring.service.impl.UserServiceImpl&quot;&gt;
+       		&lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot; /&gt;
+       &lt;/bean&gt;
+</code></pre>
+
+<h3 id="声明式事务">声明式事务</h3>
+
+<h4 id="为什么使用">为什么使用？</h4>
+
+<p>1.没有硬编码繁琐、易于维护</p>
+
+<p>2.事务处理需要业务逻辑层解决</p>
+
+<p>关注业务逻辑层方法采用什么事务策略，增删改能读能写策略，查询采用只读策略</p>
+
+<h4 id="如何使用">如何使用？</h4>
+
+<h5 id="1-xml方式实现">1.XML方式实现：</h5>
+
+<p>1、引入 aop、tx 命名空间</p>
+
+<pre><code class="language-xml">xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd&gt;
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.2.xsd&quot;&gt;
+</code></pre>
+
+<p>2.定义事务配置，aop 配置</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- spring配置文件beans根元素 --&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;	
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.2.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd&quot;&gt;
+       
+       &lt;!-- 加载database.properties文件 --&gt;
+       &lt;bean class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;
+       		&lt;property name=&quot;location&quot;&gt;
+       			&lt;value&gt;classpath:database.properties&lt;/value&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 数据源对象 --&gt;
+       &lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot; destroy-method=&quot;clone&quot;&gt;
+       		&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/smbms?useUnicode=true&amp;amp;characterEncoding=utf-8&quot; /&gt;
+       		&lt;property name=&quot;driverClassName&quot;  value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+       		&lt;property name=&quot;username&quot;  value=&quot;${user}&quot;/&gt;
+       		&lt;property name=&quot;password&quot;  value=&quot;${password}&quot;/&gt;
+       &lt;/bean&gt;
+       
+       &lt;!--1. 定义SqlSessionFactoryBean --&gt;
+       &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+       		
+       		&lt;!-- 加载数据源 --&gt;
+       		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+       		&lt;!-- 加载mybatis配置文件 --&gt;
+       		&lt;property name=&quot;configLocation&quot;&gt;
+       			&lt;value&gt;classpath:mybatis3.2.2-config.xml&lt;/value&gt;
+       		&lt;/property&gt;
+       		
+       		&lt;!-- 扫描实体包,生成别名 --&gt;
+       		&lt;property name=&quot;typeAliasesPackage&quot; value=&quot;cn.mybatisspring.entity&quot;&gt;&lt;/property&gt;
+       		
+       		&lt;!-- 加载SQL映射文件 --&gt;
+       		&lt;property name=&quot;mapperLocations&quot;&gt;
+       			&lt;list&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/UserDao-Mapper.xml&lt;/value&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/RoleDao-Mapper.xml&lt;/value&gt;
+       			&lt;/list&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义sqlSessionTemplate实例 --&gt;
+       &lt;bean id=&quot;sqlSessionTemplate&quot; class=&quot;org.mybatis.spring.SqlSessionTemplate&quot;&gt;
+       		&lt;constructor-arg ref=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- &lt;bean id=&quot;userDao&quot; class=&quot;cn.mybatisspring.dao.impl.UserDaoImpl&quot;&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot; ref=&quot;sqlSessionTemplate&quot;/&gt;
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器，将某包下的Dao接口生成bean实例 --&gt;
+       &lt;!-- &lt;bean id=&quot;roleDao&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+       		&lt;property name=&quot;mapperInterface&quot; value=&quot;cn.mybatisspring.dao.RoleDao&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot;  ref=&quot;sqlSessionTemplate&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot;/&gt;	
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器扫描类,将某包下的所有Dao接口生成bean实例
+       		bean id 名字叫什么?
+       		roleDao
+       		userDao
+        --&gt;
+       &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+       		&lt;property name=&quot;basePackage&quot; value=&quot;cn.mybatisspring.dao&quot; /&gt;
+       		&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义UserService 实例 --&gt;
+       &lt;bean id=&quot;userService&quot; class=&quot;cn.mybatisspring.service.impl.UserServiceImpl&quot;&gt;
+       		&lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot; /&gt;
+       &lt;/bean&gt;
+      
+&lt;!-- 2. 定义事务管理器,对哪个数据源进行事务处理 --&gt;
+      &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+      		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+      &lt;/bean&gt;
+       
+      &lt;!-- 3. 定义事务增强,配置事务规则 --&gt;
+       &lt;tx:advice id=&quot;txAdvice&quot; transaction-manager=&quot;transactionManager&quot;&gt;
+       		&lt;!-- 什么方法采用什么事务策略 --&gt;
+       		&lt;tx:attributes&gt;
+       			&lt;tx:method name=&quot;find*&quot; read-only=&quot;true&quot;/&gt;
+       			&lt;tx:method name=&quot;add*&quot; read-only=&quot;false&quot;/&gt;
+       			&lt;tx:method name=&quot;delete*&quot; read-only=&quot;false&quot;/&gt;
+       			&lt;tx:method name=&quot;update*&quot; read-only=&quot;false&quot;/&gt;
+       		&lt;/tx:attributes&gt;
+       &lt;/tx:advice&gt;
+       
+      &lt;!-- 4. spring aop 配置 --&gt;
+      &lt;aop:config&gt;
+      		&lt;aop:pointcut expression=&quot;execution(* cn.mybatisspring.service..*.*(..))&quot; id=&quot;pointcut&quot;/&gt;
+      		&lt;!-- 织入:将事务增强和切入点关联起来 --&gt;
+      		&lt;aop:advisor advice-ref=&quot;txAdvice&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+      &lt;/aop:config&gt;
+</code></pre>
+
+<h5 id="2-注解方式实现">2.注解方式实现：</h5>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- spring配置文件beans根元素 --&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;	
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.2.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd&quot;&gt;
+       
+       &lt;!-- 加载database.properties文件 --&gt;
+       &lt;bean class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;
+       		&lt;property name=&quot;location&quot;&gt;
+       			&lt;value&gt;classpath:database.properties&lt;/value&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 数据源对象 --&gt;
+       &lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot; destroy-method=&quot;clone&quot;&gt;
+       		&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/smbms?useUnicode=true&amp;amp;characterEncoding=utf-8&quot; /&gt;
+       		&lt;property name=&quot;driverClassName&quot;  value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+       		&lt;property name=&quot;username&quot;  value=&quot;${user}&quot;/&gt;
+       		&lt;property name=&quot;password&quot;  value=&quot;${password}&quot;/&gt;
+       &lt;/bean&gt;
+       
+       &lt;!--1. 定义SqlSessionFactoryBean --&gt;
+       &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+       		
+       		&lt;!-- 加载数据源 --&gt;
+       		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+       		&lt;!-- 加载mybatis配置文件 --&gt;
+       		&lt;property name=&quot;configLocation&quot;&gt;
+       			&lt;value&gt;classpath:mybatis3.2.2-config.xml&lt;/value&gt;
+       		&lt;/property&gt;
+       		
+       		&lt;!-- 扫描实体包,生成别名 --&gt;
+       		&lt;property name=&quot;typeAliasesPackage&quot; value=&quot;cn.mybatisspring.entity&quot;&gt;&lt;/property&gt;
+       		
+       		&lt;!-- 加载SQL映射文件 --&gt;
+       		&lt;property name=&quot;mapperLocations&quot;&gt;
+       			&lt;list&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/UserDao-Mapper.xml&lt;/value&gt;
+       				&lt;value&gt;classpath:cn/mybatisspring/dao/RoleDao-Mapper.xml&lt;/value&gt;
+       			&lt;/list&gt;
+       		&lt;/property&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义sqlSessionTemplate实例 --&gt;
+       &lt;bean id=&quot;sqlSessionTemplate&quot; class=&quot;org.mybatis.spring.SqlSessionTemplate&quot;&gt;
+       		&lt;constructor-arg ref=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- &lt;bean id=&quot;userDao&quot; class=&quot;cn.mybatisspring.dao.impl.UserDaoImpl&quot;&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot; ref=&quot;sqlSessionTemplate&quot;/&gt;
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器，将某包下的Dao接口生成bean实例 --&gt;
+       &lt;!-- &lt;bean id=&quot;roleDao&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+       		&lt;property name=&quot;mapperInterface&quot; value=&quot;cn.mybatisspring.dao.RoleDao&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionTemplate&quot;  ref=&quot;sqlSessionTemplate&quot;/&gt;
+       		&lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot;/&gt;	
+       &lt;/bean&gt; --&gt;
+       
+       &lt;!-- 定义数据映射器扫描类,将某包下的所有Dao接口生成bean实例
+       		bean id 名字叫什么?
+       		roleDao
+       		userDao
+        --&gt;
+       &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+       		&lt;property name=&quot;basePackage&quot; value=&quot;cn.mybatisspring.dao&quot; /&gt;
+       		&lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;
+       &lt;/bean&gt;
+       
+       &lt;!-- 定义UserService 实例 --&gt;
+       &lt;bean id=&quot;userService&quot; class=&quot;cn.mybatisspring.service.impl.UserServiceImpl&quot;&gt;
+       		&lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot; /&gt;
+       &lt;/bean&gt;
+      
+&lt;!-- 定义UserService 实例 --&gt;
+       &lt;bean id=&quot;userService&quot; class=&quot;cn.mybatisspring.service.impl.UserServiceImpl&quot;&gt;
+       		&lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot; /&gt;
+       &lt;/bean&gt;
+      
+      &lt;!-- 2. 定义事务管理器,对哪个数据源进行事务处理 --&gt;
+      &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+      		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+      &lt;/bean&gt;
+      
+      &lt;!-- 添加事务注解支持 --&gt;
+      &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;
+</code></pre>
+
+<p>在类中必须使用 @Transactional 注解元素进行标识</p>
+
+<pre><code class="language-java">package cn.mybatisspring.service.impl;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.mybatisspring.dao.UserDao;
+import cn.mybatisspring.entity.User;
+import cn.mybatisspring.service.UserService;
+
+@Transactional
+public class UserServiceImpl implements UserService {
+
+	private UserDao userDao;
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	@Transactional(readOnly=true)
+	public User findUserByNamePwd(String name, String pwd) {
+
+		return userDao.getUserByNamePwd(name, pwd);
+	}
+
+	public List&lt;User&gt; findUserByNameRId(String name, Integer rid,
+			Integer pageIndex, Integer pageSize) {
+
+		return userDao.getUserByNameRId(name, rid, (pageIndex-1)*pageSize, pageSize);
+	}
+
+	@Transactional
+	public Integer addUser(User user) {
+		if (user == null) {
+			return null;
+		}
+		User user2 = userDao.getUserByName(user.getUserName());
+		//判断用户名是否可用
+		if (user2 == null) {
+			return userDao.insert(Arrays.asList(user));
+		}
+		return null;
+	}
+
+	@Transactional
+	public Integer deleteUser(Long uid) {
+
+		return userDao.delete(uid);
+	}
+
+}
+
+</code></pre>
+
+                        </div>
+
+                        
+
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/blog/">Spring核心概念</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://githubcy0522.github.io/tags/spring">Spring</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://githubcy0522.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/" title="MyBatis 与 Spring 的整合">MyBatis 与 Spring 的整合</a>
+    </li>
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/blog/" title="Spring核心概念">Spring核心概念</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(2)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://githubcy0522.github.io/tags/spring/">spring</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.baidu.com" title="百度">百度</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://githubcy0522.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://githubcy0522.github.io/">新人来也匆匆的博客 By 新人来也匆匆</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+    
+    (function(){
+        $("pre code").parent().addClass("line-numbers")
+    }())
+
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

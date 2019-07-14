@@ -70,6 +70,35 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/">MyBatis 与 Spring 的整合</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年7月15日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                MyBatis 与 Spring 的整合 1.Spring 如何 整合 mybatis spring 开发完 3.2.13 版本后，mybatis 3.2.2 尚未开发完毕，mybatis 3.2.2 自己开发一个整合 spring 3.2.13 的驱动包，mybatis-spring-1.2.0.jar。
+整合思路：  spring 提供 DI 和 AOP 整合 mybatis 框架并且 mybatis 3.2.2 开发 mybatis-spring-1.2.0.jar 升级了他自己核心接口和类，以便于与 spring 整合。（spring 通过 ioc 、di 管理其他框架的对象）  Spring ioc 管理 mybatis框架： SqlSessionTemplate、SqlSessionFactoryBean
+SqlSessionFactoryBean 为整合应用提供 Sqlsession 对象资源
+SqlSessionTemplate 负责管理 MyBatis 的 SqlSession，调用 SQL 映射语句，实现对数据库的访问
+MapperFactoryBean 根据指定 Mapper 接口生成 Bean 实例
+MapperScannerConfigurer 根据指定包批量扫描 Mapper 接口并生成实例
+整合步骤： 搭建 mybatis 和 spring 整合的框架环境 1.……
+                                <p class="readmore"><a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/">阅读全文</a></p>
+                            </div>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://githubcy0522.github.io/post/blog/">Spring核心概念</a>
                                 </h1>
                             </header>
@@ -122,6 +151,10 @@ DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符
 <ul class="widget-list">
     
     <li>
+        <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/" title="MyBatis 与 Spring 的整合">MyBatis 与 Spring 的整合</a>
+    </li>
+    
+    <li>
         <a href="https://githubcy0522.github.io/post/blog/" title="Spring核心概念">Spring核心概念</a>
     </li>
     
@@ -135,7 +168,7 @@ DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符
 <ul class="widget-list">
     
     <li>
-        <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(1)</a>
+        <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(2)</a>
     </li>
     
 </ul>
