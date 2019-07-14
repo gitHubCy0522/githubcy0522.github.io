@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>新人来也匆匆的博客</title>
-    <link>https://githubcy0522.github.io/</link>
-    <description>Recent content on 新人来也匆匆的博客</description>
+    <title>MyBatis on 新人来也匆匆的博客</title>
+    <link>https://githubcy0522.github.io/categories/mybatis/</link>
+    <description>Recent content in MyBatis on 新人来也匆匆的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 15 Jul 2019 02:14:25 +0800</lastBuildDate>
     
-	<atom:link href="https://githubcy0522.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://githubcy0522.github.io/categories/mybatis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -53,31 +53,6 @@ SqlSessionTemplate 负责管理 MyBatis 的 SqlSession，调用 SQL 映射语句
 MapperFactoryBean 根据指定 Mapper 接口生成 Bean 实例
 MapperScannerConfigurer 根据指定包批量扫描 Mapper 接口并生成实例
 整合步骤： 搭建 mybatis 和 spring 整合的框架环境 1.</description>
-    </item>
-    
-    <item>
-      <title>Spring核心概念</title>
-      <link>https://githubcy0522.github.io/post/blog/</link>
-      <pubDate>Sun, 14 Jul 2019 21:31:48 +0800</pubDate>
-      
-      <guid>https://githubcy0522.github.io/post/blog/</guid>
-      <description>Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
-又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
-DI，可以注入什么数据类型 1.字面量 -&amp;gt;基本数据类型和字符串
-2.null 或空字符串
-3.引用类型(对象)、内部bean
-4.数组、集合
-特殊字符，解决方式：1.使用实体引用 2. &amp;lt;![CDATA[特殊字符]]&amp;gt;
-1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&amp;quot;获取用户信息!&amp;quot;); return userDao.findUser(uname, password); } }  2.</description>
-    </item>
-    
-    <item>
-      <title>归档</title>
-      <link>https://githubcy0522.github.io/archives/</link>
-      <pubDate>Sun, 14 Jul 2019 21:31:48 +0800</pubDate>
-      
-      <guid>https://githubcy0522.github.io/archives/</guid>
-      <description></description>
     </item>
     
   </channel>

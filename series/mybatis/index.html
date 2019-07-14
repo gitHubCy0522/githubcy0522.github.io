@@ -7,22 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Spring全家桶 | 新人来也匆匆的博客</title>
-    <meta property="og:title" content="Spring全家桶 - 新人来也匆匆的博客">
+    <title>MyBatis | 新人来也匆匆的博客</title>
+    <meta property="og:title" content="MyBatis - 新人来也匆匆的博客">
     <meta property="og:type" content="article">
         
         
     <meta name="Keywords" content="">
-    <meta name="description" content="Spring全家桶">
+    <meta name="description" content="MyBatis">
         
     <meta name="author" content="新人来也匆匆">
-    <meta property="og:url" content="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">
+    <meta property="og:url" content="https://githubcy0522.github.io/series/mybatis/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/index.xml" title="新人来也匆匆的博客" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://githubcy0522.github.io/series/mybatis/index.xml" title="新人来也匆匆的博客" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -65,13 +65,50 @@
             <div class="col-8" id="main">
                 <div class="res-cons">
                     
-                    <h3 class="archive-title">
-                        分类
-                        <span class="keyword">Spring全家桶</span>
-                        中的文章
-                    </h3>
-                    
 
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">MyBatis基础知识</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年7月15日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://githubcy0522.github.io/categories/mybatis">MyBatis</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                MyBatis基础知识 1.mybatis框架 1.1mybatis 是什么？ mybatis是一个持久层的框架，是apache下的顶级项目。
+mybatis 托管 到 goolecode 下， 再后来托管到 github 下。
+mybatis让程序将主要精力放在 sql上，通过mybatis提供映射方式，来自由灵活生成（半自动化，大部分需要程序员编写 sql）满足需求的 sql 语句。
+mybatis 可以将向 preparedStatement 中的输入参数自动进行输入映射，将查询结果集灵活的映射成java对象。（输出映射）
+1.2 mybatis框架 sqlMapConfig.xml（是mybatis的全局配置文件，名称不固定）：配置了数据源、事务等mybatis运行环境
+mapper.xml：是mybatis的映射配置文件（配置 sql 语句）
+2.入门程序 2.1 需求 根据用户 id （主键）查询用户信息
+根据用户名称模糊查询用户信息
+添加用户
+删除用户
+更新用户
+2.2 环境 java 环境：jdk 1.7.0_72
+eclipse：indigo
+my sql ：5.1
+mybatis运行环境（jar包）：从 https://github.com/mybatis/mybatis-3/releases 下载
+lib 下：
+mybatis-3.2.7.jar：核心包
+mybatis-3.2.7.pdf：操作指南
+加入 mysql 的驱动包
+2.3 log4j.properties 2.4 sqlMapConfig.xml 配置mybatis的运行环境，数据源、事务等
+2.5根据用户id（主键）查询用户信息 2.51 创建User实体类 package cn.bdqn.pojo; import java.util.Date; /** * 用户实体类 * * @author Administrator * */ public class User { // 属性名和数据库表的字段对应 private int id;// id private String username;// 用户姓名 private Date birthday;// 生日 private int sex;// 性别 private String address;// 地址 }  2.……
+                                <p class="readmore"><a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">阅读全文</a></p>
+                            </div>
+                        </article>
                     
                         <article class="post">
                             <header>
@@ -101,36 +138,6 @@ MapperFactoryBean 根据指定 Mapper 接口生成 Bean 实例
 MapperScannerConfigurer 根据指定包批量扫描 Mapper 接口并生成实例
 整合步骤： 搭建 mybatis 和 spring 整合的框架环境 1.……
                                 <p class="readmore"><a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/">阅读全文</a></p>
-                            </div>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://githubcy0522.github.io/post/blog/">Spring核心概念</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年7月14日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
-又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
-DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
-2.null 或空字符串
-3.引用类型(对象)、内部bean
-4.数组、集合
-特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
-1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2.……
-                                <p class="readmore"><a href="https://githubcy0522.github.io/post/blog/">阅读全文</a></p>
                             </div>
                         </article>
                     

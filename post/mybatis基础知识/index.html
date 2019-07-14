@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MyBatis基础知识 | 新人来也匆匆的博客</title>
+    <meta property="og:title" content="MyBatis基础知识 - 新人来也匆匆的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-07-15T02:14:25&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-07-15T02:14:25&#43;08:00">
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="MyBatis基础知识">
+        
+    <meta name="author" content="新人来也匆匆">
+    <meta property="og:url" content="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://githubcy0522.github.io/">
+                        新人来也匆匆的博客
+                    </a>
+                
+                <p class="description">热爱互联网IT行业，从事java。梦想着从菜鸟晋级老鸟</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://githubcy0522.github.io/">首页</a>
+                    
+                    <a  href="https://githubcy0522.github.io/archives/" title="归档">归档</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">MyBatis基础知识</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年7月15日
+                        </date>
+                        
+                        <div class="post-meta">
+                            <span>|</span>
+                            
+                                <span class="meta-category"><a href="https://githubcy0522.github.io/categories/mybatis">MyBatis</a></span>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="mybatis基础知识">MyBatis基础知识</h1>
+
+<h3 id="1-mybatis框架">1.mybatis框架</h3>
+
+<h4 id="1-1mybatis-是什么">1.1mybatis 是什么？</h4>
+
+<p>mybatis是一个持久层的框架，是apache下的顶级项目。</p>
+
+<p>mybatis 托管 到 goolecode 下， 再后来托管到 github 下。</p>
+
+<p>mybatis让程序将主要精力放在 sql上，通过mybatis提供映射方式，来自由灵活生成（半自动化，大部分需要程序员编写 sql）满足需求的 sql 语句。</p>
+
+<p>mybatis 可以将向 preparedStatement 中的输入参数自动进行<strong>输入映射</strong>，将查询结果集灵活的映射成java对象。（<strong>输出映射</strong>）</p>
+
+<h4 id="1-2-mybatis框架">1.2 mybatis框架</h4>
+
+<p><strong>sqlMapConfig.xml（是mybatis的全局配置文件，名称不固定）：</strong>配置了数据源、事务等mybatis运行环境</p>
+
+<p><strong>mapper.xml：</strong>是mybatis的映射配置文件（配置 sql 语句）</p>
+
+<h3 id="2-入门程序">2.入门程序</h3>
+
+<h4 id="2-1-需求">2.1 需求</h4>
+
+<p>根据用户 id  （主键）查询用户信息</p>
+
+<p>根据用户名称模糊查询用户信息</p>
+
+<p>添加用户</p>
+
+<p>删除用户</p>
+
+<p>更新用户</p>
+
+<h4 id="2-2-环境">2.2 环境</h4>
+
+<p>java 环境：jdk 1.7.0_72</p>
+
+<p>eclipse：indigo</p>
+
+<p>my sql ：5.1</p>
+
+<p>mybatis运行环境（jar包）：从 <a href="https://github.com/mybatis/mybatis-3/releases">https://github.com/mybatis/mybatis-3/releases</a> 下载</p>
+
+<p><img src="D:KJJAVA基础知识Y2mybatis-3.2.7捕获.PNG" alt="" /></p>
+
+<p>lib 下：</p>
+
+<p>mybatis-3.2.7.jar：核心包</p>
+
+<p>mybatis-3.2.7.pdf：操作指南</p>
+
+<p>加入 mysql 的驱动包</p>
+
+<h4 id="2-3-log4j-properties">2.3  log4j.properties</h4>
+
+<p><img src="D:KJJAVAY2视频log4j.PNG" alt="" /></p>
+
+<h4 id="2-4-sqlmapconfig-xml">2.4 sqlMapConfig.xml</h4>
+
+<p>配置mybatis的运行环境，数据源、事务等</p>
+
+<h4 id="2-5根据用户id-主键-查询用户信息">2.5根据用户id（主键）查询用户信息</h4>
+
+<h5 id="2-51-创建user实体类">2.51 创建User实体类</h5>
+
+<pre><code class="language-java">package cn.bdqn.pojo;
+
+import java.util.Date;
+
+/**
+ * 用户实体类
+ * 
+ * @author Administrator
+ *
+ */
+public class User {
+
+	// 属性名和数据库表的字段对应
+	private int id;// id
+	private String username;// 用户姓名
+	private Date birthday;// 生日
+	private int sex;// 性别
+	private String address;// 地址
+}
+</code></pre>
+
+<h5 id="2-5-2-映射文件">2.5.2 映射文件</h5>
+
+<p>映射文件命名：</p>
+
+<p>User.xml（原始ibatis 命名），mapper代理开发映射文件名称叫 XXXMapper.xml，比如说：UserMapper.xml</p>
+
+<p>在映射文件中配置 sql 语句</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;!-- namespace命名空间，作用就是对 sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发：namespace有特殊重要作用
+ --&gt;
+&lt;mapper namespace=&quot;test&quot;&gt;
+	
+	&lt;!-- 在映射文件中配置很多sql语句 --&gt;
+	&lt;!-- 需求： 通过id来查询用户表的记录 --&gt;
+	&lt;!-- 通过 select 执行数据库查询
+	id：标识 映射文件中的sql，称为 statement的 id。
+	将sql语句封装到mappedStatement对象中，所以将id称为statement的 id。
+	#{}表示一个占位符号。
+	parameterType：指定输入参数的类型，这里指定int类型。
+	#{id}：其中的id表示接收输入的参数，参数名称就是id，如果输入参数是简单类型，#{}中的参数名可以任意，
+	可以是value或其他的名称。
+	
+	resultType：指定sql输出结果的 所映射的java对象类型，这里select指定resultType表示将单条记录
+	所映射成的java对象。
+	 --&gt;
+	&lt;select id=&quot;findUserById&quot; parameterType=&quot;int&quot; resultType=&quot;cn.bdqn.pojo.User&quot;&gt;
+		SELECT * FROM `user` WHERE id=#{id}
+	&lt;/select&gt;
+	
+&lt;/mapper&gt;
+</code></pre>
+
+<h5 id="2-5-3-在-sqlmapconfig-xml加载映射文件">2.5.3 在 sqlMapConfig.xml加载映射文件</h5>
+
+<pre><code class="language-xml"> &lt;!-- 加载 映射文件 --&gt;
+  &lt;mappers&gt;
+  	&lt;mapper resource=&quot;sqlmap/User.xml&quot;/&gt;
+  &lt;/mappers&gt;
+</code></pre>
+
+<h5 id="2-5-4-程序编写">2.5.4 程序编写</h5>
+
+<pre><code class="language-java">//根据id查询用户信息，得到一条记录结果
+	@Test
+	public void findUserById() throws IOException{
+		
+		//mybatis配置文件
+		String resource = &quot;SqlMapConfig.xml&quot;;
+		//得到配置文件流
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		//创建会话工厂,传入mybatis的配置文件信息
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		//通过工厂得到 sqlsession
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//通过sqlsession操作数据库
+		//第一个参数：映射文件中statement的id，等于=命名空间+statement的id
+		//第二个参数：指定和映射文件中所匹配的parpamenterType类型的参数
+		//sqlSession.selectOne结果是与映射文件中所匹配的resultType类型的对象
+		User user = sqlSession.selectOne(&quot;test.findUserById&quot;, 1);
+		System.out.println(user);
+		//释放资源
+		sqlSession.close();
+	}
+</code></pre>
+
+<h4 id="2-6-根据用户名称模糊查询用户信息">2.6 根据用户名称模糊查询用户信息</h4>
+
+<h5 id="3-6-1-映射文件">3.6.1 映射文件</h5>
+
+<p>使用User.xml ，添加根据用户名称模糊查询用户信息的sql语句。</p>
+
+<h5 id="3-6-2-程序代码">3.6.2 程序代码</h5>
+
+<pre><code class="language-xml">&lt;!-- 根据用户名称模糊查询用户信息,可能返回多条
+		resultType：指定就是单条记录所映射的java对象类型
+		${}:表示拼接sql串，将接收到的参数内容不加任何修饰拼接在sql中。
+		使用${}拼接sql，引起sql注入
+		${value}:接收输入参数的内容，如果传入类型是简单类型，${}中只能使用value
+	 --&gt;
+	&lt;select id=&quot;findUserByName&quot; parameterType=&quot;String&quot; resultType=&quot;cn.bdqn.pojo.User&quot;&gt;
+		SELECT * FROM `user` WHERE `username` LIKE 	'%${value}%'
+	&lt;/select&gt;
+</code></pre>
+
+<h4 id="2-7-添加用户">2.7 添加用户</h4>
+
+<h5 id="2-7-1-映射文件">2.7.1 映射文件</h5>
+
+<p>在 User.xml 中配置添加用户的Statement</p>
+
+<pre><code class="language-xml">&lt;!-- 添加用户
+		parameterType:指定输入参数类型是pojo(包括用户信息)
+		#{}中指定pojo的属性名,接收到pojo对象的属性值,mybatis通过OGNL获取对象的属性值
+	 --&gt;
+	&lt;insert id=&quot;insertUser&quot; parameterType=&quot;cn.bdqn.pojo.User&quot;&gt;
+		INSERT INTO `user`(`id`,`username`,`birthday`,`sex`,`address`)
+		VALUES(#{id},#{username},#{birthday},#{sex},#{address})
+	&lt;/insert&gt;
+</code></pre>
+
+<h5 id="2-7-2-程序代码">2.7.2 程序代码</h5>
+
+<pre><code class="language-java">@Test
+	public void insertUser() throws IOException{
+
+		//mybatis配置文件
+		String resource = &quot;SqlMapConfig.xml&quot;;
+		//得到配置文件流
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		//创建会话工厂,传入mybatis的配置文件信息
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		//通过工厂得到 sqlsession
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//插入用户对象
+		User user = new User();
+		user.setUsername(&quot;关羽&quot;);
+		user.setBirthday(new java.util.Date());
+		user.setSex(1);
+		user.setAddress(&quot;三国西蜀&quot;);
+		sqlSession.insert(&quot;test.insertUser&quot;, user);
+		//执行提交事务
+		sqlSession.commit();
+		//释放资源
+		sqlSession.close();
+	}
+</code></pre>
+
+<h5 id="2-7-3-自增主键返回">2.7.3 自增主键返回</h5>
+
+<p>mysql 自增主键，执行 insert 提交之前 自动生成一个自增主键。</p>
+
+<p>通过 mysql 函数 获取到刚插入记录的自增主键：LAST_INSERT_ID()</p>
+
+<p>是在 insert 之后调用此函数。</p>
+
+<pre><code class="language-xml">&lt;!-- 添加用户
+		parameterType:指定输入参数类型是pojo(包括用户信息)
+		#{}中指定pojo的属性名,接收到pojo对象的属性值,mybatis通过OGNL获取对象的属性值
+	 --&gt;
+	&lt;insert id=&quot;insertUser&quot; parameterType=&quot;cn.bdqn.pojo.User&quot;&gt;
+		&lt;!-- 
+			将插入数据的主键返回，返回到user对象中
+			SELECT LAST_INSERT_ID():得到刚insert进去记录的主键值，只适用于自增主键
+			keyProperty:将查询到的主键值设置到 parameterType指定的对象的哪个属性
+			order:SELECT LAST_INSERT_ID()执行顺序,相对于insert语句来说它的执行顺序
+			resultType:指定SELECT LAST_INSERT_ID()的结果类型
+		 --&gt;
+		&lt;selectKey keyProperty=&quot;id&quot; order=&quot;AFTER&quot; resultType=&quot;int&quot;&gt;
+			SELECT LAST_INSERT_ID()
+		&lt;/selectKey&gt;
+		INSERT INTO `user`(`username`,`birthday`,`sex`,`address`)
+		VALUES(#{username},#{birthday},#{sex},#{address})
+	&lt;/insert&gt;
+</code></pre>
+
+<h5 id="2-7-4-非自增主键返回-使用-uuid">2.7.4  非自增主键返回(使用 uuid（）)</h5>
+
+<p>使用mysql 的 uuid() 函数生成主键，需要修改表中 id 字段 类型 为 string，长度设置成35位。</p>
+
+<p>执行思路：</p>
+
+<p>先通过 uuid() 查询到主键，将主键输入到 sql 语句中。</p>
+
+<p>执行 uuid 语句顺序相对于 insert 语句之前执行。</p>
+
+<pre><code class="language-xml">&lt;!-- 
+		使用 mysql的uuid()生成主键
+		执行过程:
+		首先通过uuid()得到主键,将主键设置到user对象属性中
+		其次在insert执行时,从user对象中取出id属性值
+		 --&gt;
+		 &lt;selectKey keyProperty=&quot;id&quot; order=&quot;BEFORE&quot; resultType=&quot;String&quot;&gt;
+			SELECT uuid()
+		&lt;/selectKey&gt;
+		INSERT INTO `user`(`id`,`username`,`birthday`,`sex`,`address`)
+		VALUES(#{id},#{username},#{birthday},#{sex},#{address})
+</code></pre>
+
+<p>通过 oracle 的序列生成主键：</p>
+
+<pre><code class="language-xml">		 &lt;selectKey keyProperty=&quot;id&quot; order=&quot;BEFORE&quot; resultType=&quot;String&quot;&gt;
+			SELECT 序列名.nextval()
+		&lt;/selectKey&gt;
+		INSERT INTO `user`(`id`,`username`,`birthday`,`sex`,`address`)
+		VALUES(#{id},#{username},#{birthday},#{sex},#{address})
+</code></pre>
+
+<h4 id="2-8-删除用户">2.8 删除用户</h4>
+
+<h5 id="2-8-1-映射文件">2.8.1 映射文件</h5>
+
+<pre><code class="language-xml">&lt;!-- 删除用户
+		根据id删除用户,需要输入id值
+	 --&gt;
+	&lt;delete id=&quot;deleteUser&quot; parameterType=&quot;int&quot;&gt;
+		delete from user where id=#{id}
+	&lt;/delete&gt;
+</code></pre>
+
+<h5 id="2-8-2-代码">2.8.2 代码:</h5>
+
+<pre><code class="language-java">//删除用户信息
+	@Test
+	public void deleteUser() throws IOException{
+
+		//mybatis配置文件
+		String resource = &quot;SqlMapConfig.xml&quot;;
+		//得到配置文件流
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		//创建会话工厂,传入mybatis的配置文件信息
+		SqlSessionFactory sqlSessionFactory = new 	SqlSessionFactoryBuilder().build(inputStream);
+		//通过工厂得到 sqlsession
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//执行操作
+		sqlSession.delete(&quot;test.deleteUser&quot;, 1);
+		//执行提交事务
+		sqlSession.commit();
+		//释放资源
+		sqlSession.close();
+	}
+</code></pre>
+
+<h4 id="2-9-更新用户">2.9 更新用户</h4>
+
+<h5 id="2-9-1映射文件">2.9.1映射文件</h5>
+
+<pre><code class="language-xml">&lt;!-- 更新用户
+		根据id更新用户
+	分析:
+		需要传入用户的id
+		需要传入用户的更新信息
+		parameterType指定user对象,包括id和更新信息,注意:id必须存在
+		#{id}:从输入user对象中获取id属性值
+	 --&gt;
+	&lt;update id=&quot;updateUser&quot; parameterType=&quot;cn.bdqn.pojo.User&quot;&gt;
+		update user set `username`=#{username},`birthday`=#{birthday},`sex`=#{sex},`address`=#{address} 
+		where id=#{id}
+	&lt;/update&gt;
+</code></pre>
+
+<h5 id="2-9-2-代码">2.9.2  代码：</h5>
+
+<pre><code class="language-java">//更新用户信息
+	@Test
+	public void updateUser() throws IOException{
+
+		//mybatis配置文件
+		String resource = &quot;SqlMapConfig.xml&quot;;
+		//得到配置文件流
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		//创建会话工厂,传入mybatis的配置文件信息
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		//通过工厂得到 sqlsession
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//更新用户信息
+		User user = new User();
+		user.setId(2);
+		user.setUsername(&quot;曹意&quot;);
+		user.setBirthday(new java.util.Date());
+		user.setSex(1);
+		user.setAddress(&quot;湖南长沙&quot;);
+		//执行操作
+		sqlSession.update(&quot;test.updateUser&quot;, user);
+		//执行提交事务
+		sqlSession.commit();
+		//释放资源
+		sqlSession.close();
+	}
+</code></pre>
+
+<h4 id="3-0-总结">3.0 总结</h4>
+
+<h5 id="3-0-1-parametertype">3.0.1 parameterType</h5>
+
+<p>在映射文件中 通过parameterType 指定输入 参数类型</p>
+
+<h5 id="3-0-2-reuslttype">3.0.2 reusltType</h5>
+
+<p>在映射文件中 通过 reusltType 指定 输出 结果的类型</p>
+
+<h5 id="3-0-3-和">3.0.3 #{} 和 ${}</h5>
+
+<p>#{}表示一个占位符号，#{}接收输入参数，类型可以时简单类型，pojo、hashmap。</p>
+
+<p>如果接收简单类型，#{}中可以写成value或其他名称。</p>
+
+<p>#{}接收pojo对象值，通过OGNL 读取对象中的属性值，通过属性.属性.属性。。。的方式获取对象属性值。</p>
+
+<p>${}表示一个拼接符号，会引起sql 注入 ，所以不建议使用${}。</p>
+
+<p>${}接收输入参数，类型可以时简单类型，pojo、hashmap。</p>
+
+<p>如果接收简单类型，${}中只能写成value或其他名称。</p>
+
+<p>${}接收pojo对象值，通过OGNL 读取对象中的属性值，通过属性.属性.属性。。。的方式获取对象属性值。</p>
+
+<h5 id="3-0-4-selectone-和-selectlist">3.0.4 selectOne 和 selectList</h5>
+
+<p>selectOne 表示查询出一条记录进行映射。如果使用selectOne 可以实现使用selectList 也可以实现（list 中只有 一个对象）。</p>
+
+<p>selectList 表示查询出一个列表 也就是多条记录进行映射。如果使用selectList查询多条记录，不能使用selectOne。</p>
+
+<p>报错：</p>
+
+<pre><code class="language-java">org.apache.ibatis.exceptions.TooManyResultsException: Expected one result (or null) to be returned by selectOne(), but found: 2
+</code></pre>
+
+<h5 id="3-1-mybatis-和-hibernate-本质的区别和应用的场景">3.1 mybatis 和 hibernate 本质的区别和应用的场景</h5>
+
+<p><strong>hibernate：</strong>是一个标准的 ORM 框架（对象关系映射）。入门门槛较高的，不需要程序写sql，sql语句自动生成了。对sql语句进行优化、修改比较困难的。</p>
+
+<p><strong>应用场景：</strong></p>
+
+<p>​   适用于需要变化不多的中小型项目： 比如：后台管理系统，erp，orm、oa。。。</p>
+
+<p><strong>mybatis：</strong>专注是 sql 本身，需要程序员自己编写 sql 语句，sql 修改、优化比较方便。mybatis 是 一个不完全的 ORM 框架，虽然程序员自己写 sql，mybatis 也可以实现映射（输入映射，输出映射）。</p>
+
+<p><strong>应用场景：</strong></p>
+
+<p>​   适用于需要变化较多的项目，比如：互联网项目。</p>
+
+<p>企业进行技术选型，以低成本，高回报作为技术选型的原则，根据项目组的技术力量进行选择。</p>
+
+<h4 id="4-0查询缓存">4.0查询缓存</h4>
+
+<h5 id="4-1什么是查询缓存">4.1什么是查询缓存</h5>
+
+<p>mybatis提供查询缓存，用于减轻数据库的压力，提供数据库性能。</p>
+
+<p>mybatis提供一级缓存，和二级缓存。</p>
+
+<p><img src="D:KJJAVA基础知识Y2视频查询缓存.png" alt="" /></p>
+
+<p><strong>一级缓存</strong>是SqlSession级别的缓存。在操作数据库时需要构造SqlSession对象，在对象中有一个数据结构(HashMap)用于缓存数据。不同的SqlSession之间的缓存数据区域是互相不影响的。</p>
+
+<p><strong>二级缓存</strong>是mapper级别的缓存，多个SqlSession去操作同一个Mapper的 sql 语句，多个 SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。</p>
+
+<p><strong>为什么要用缓存？</strong></p>
+
+<p>如果缓存中有数据就不用从数据库中来获取，大大提高系统性能。</p>
+
+<h5 id="4-2一级缓存">4.2一级缓存</h5>
+
+<h6 id="4-2-1一级缓存工作原理">4.2.1一级缓存工作原理</h6>
+
+<p><img src="D:KJJAVA基础知识Y2视频一级缓存.png" alt="" /></p>
+
+<p>第一次发起查询用户 id 为 1 的用户信息，先去找缓存中是否有 id 为 1 的用户信息，如果没有，从数据库查询用户信息。</p>
+
+<p>得到用户信息，将用户信息存储到一级缓存中。</p>
+
+<p>如果 SqlSession 去执行 commit 操作（执行插入、更新、删除），清空 SqlSession 中的一级缓存，这样做的目的为了让缓存中永远存储的是最新的信息，避免脏读。</p>
+
+<p>第二次发起查询用户 id 为 1 的用户信息，先去找缓存中是否有 id 为 1 的用户信息，缓存中有，直接从缓存中获取用户信息。</p>
+
+<h6 id="4-2-2一级缓存测试">4.2.2一级缓存测试</h6>
+
+<p>mybatis默认支持一级缓存，不需要在配置文件中去配置。</p>
+
+<p>按照上边一级缓存的原理步骤去测试。</p>
+
+<h6 id="4-2-3一级缓存应用">4.2.3一级缓存应用</h6>
+
+<p>正式开发，是将mybatis 和 spring 进行整合开发，事务控制是在 se&rsquo;rvice 中。</p>
+
+<p>一个 service 方法中包括很多 mapper 方法的调用。</p>
+
+<pre><code class="language-java">service{
+    //开始执行时，开启事务，创建 SqlSession对象
+    //第一次调用 mapper 的方法 findUserById（1）
+    
+    //第二次调用 mapper 的方法 findUserById（1），从一级缓存中取数据
+    //方法结束，SqlSession关闭
+}
+</code></pre>
+
+<p>如果是 执行两次 service 调用查询相同的用户信息，不走一级缓存，因为 session方法结束，SqlSession就关闭，一级缓存就清空。</p>
+
+<h5 id="4-3二级缓存">4.3二级缓存</h5>
+
+                        </div>
+
+                        
+
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/">MyBatis 与 Spring 的整合</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://githubcy0522.github.io/tags/mybatis">MyBatis</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://githubcy0522.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MyBatis基础知识">MyBatis基础知识</a>
+    </li>
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/" title="MyBatis 与 Spring 的整合">MyBatis 与 Spring 的整合</a>
+    </li>
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/blog/" title="Spring核心概念">Spring核心概念</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/categories/mybatis/">mybatis(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(2)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://githubcy0522.github.io/tags/mybatis/">mybatis</a>
+    
+    <a href="https://githubcy0522.github.io/tags/spring/">spring</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.baidu.com" title="百度">百度</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://githubcy0522.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://githubcy0522.github.io/">新人来也匆匆的博客 By 新人来也匆匆</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+    
+    (function(){
+        $("pre code").parent().addClass("line-numbers")
+    }())
+
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

@@ -66,6 +66,49 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MyBatis基础知识" >MyBatis基础知识</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年7月15日
+                            </date>
+                            
+                            <div class="post-meta">
+                                <span>|</span>
+                                
+                                <span class="meta-category"><a href="https://githubcy0522.github.io/categories/mybatis">MyBatis</a></span>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                MyBatis基础知识 1.mybatis框架 1.1mybatis 是什么？ mybatis是一个持久层的框架，是apache下的顶级项目。
+mybatis 托管 到 goolecode 下， 再后来托管到 github 下。
+mybatis让程序将主要精力放在 sql上，通过mybatis提供映射方式，来自由灵活生成（半自动化，大部分需要程序员编写 sql）满足需求的 sql 语句。
+mybatis 可以将向 preparedStatement 中的输入参数自动进行输入映射，将查询结果集灵活的映射成java对象。（输出映射）
+1.2 mybatis框架 sqlMapConfig.xml（是mybatis的全局配置文件，名称不固定）：配置了数据源、事务等mybatis运行环境
+mapper.xml：是mybatis的映射配置文件（配置 sql 语句）
+2.入门程序 2.1 需求 根据用户 id （主键）查询用户信息
+根据用户名称模糊查询用户信息
+添加用户
+删除用户
+更新用户
+2.2 环境 java 环境：jdk 1.7.0_72
+eclipse：indigo
+my sql ：5.1
+mybatis运行环境（jar包）：从 https://github.com/mybatis/mybatis-3/releases 下载
+lib 下：
+mybatis-3.2.7.jar：核心包
+mybatis-3.2.7.pdf：操作指南
+加入 mysql 的驱动包
+2.3 log4j.properties 2.4 sqlMapConfig.xml 配置mybatis的运行环境，数据源、事务等
+2.5根据用户id（主键）查询用户信息 2.51 创建User实体类 package cn.bdqn.pojo; import java.util.Date; /** * 用户实体类 * * @author Administrator * */ public class User { // 属性名和数据库表的字段对应 private int id;// id private String username;// 用户姓名 private Date birthday;// 生日 private int sex;// 性别 private String address;// 地址 }  2.……
+                            </div>
+                            <p class="readmore"><a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/" title="MyBatis 与 Spring 的整合" >MyBatis 与 Spring 的整合</a>
                                 </h1>
                             </header>
@@ -77,6 +120,8 @@
                                 <span>|</span>
                                 
                                 <span class="meta-category"><a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a></span>
+                                
+                                <span class="meta-category"><a href="https://githubcy0522.github.io/categories/mybatis">MyBatis</a></span>
                                 
                             </div>
                             
@@ -162,6 +207,10 @@ DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符
 <ul class="widget-list">
     
     <li>
+        <a href="https://githubcy0522.github.io/post/mybatis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MyBatis基础知识">MyBatis基础知识</a>
+    </li>
+    
+    <li>
         <a href="https://githubcy0522.github.io/post/mybatis-%E4%B8%8E-spring-%E7%9A%84%E6%95%B4%E5%90%88/" title="MyBatis 与 Spring 的整合">MyBatis 与 Spring 的整合</a>
     </li>
     
@@ -179,6 +228,10 @@ DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符
 <ul class="widget-list">
     
     <li>
+        <a href="https://githubcy0522.github.io/categories/mybatis/">mybatis(2)</a>
+    </li>
+    
+    <li>
         <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(2)</a>
     </li>
     
@@ -188,6 +241,8 @@ DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符
     <section class="widget">
         <h3 class="widget-title">标签</h3>
 <div class="tagcloud">
+    
+    <a href="https://githubcy0522.github.io/tags/mybatis/">mybatis</a>
     
     <a href="https://githubcy0522.github.io/tags/spring/">spring</a>
     
