@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>新人来也匆匆的博客</title>
-    <link>https://githubcy0522.github.io/</link>
-    <description>Recent content on 新人来也匆匆的博客</description>
+    <title>Spring on 新人来也匆匆的博客</title>
+    <link>https://githubcy0522.github.io/tags/spring/</link>
+    <description>Recent content in Spring on 新人来也匆匆的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Sun, 14 Jul 2019 21:31:48 +0800</lastBuildDate>
     
-	<atom:link href="https://githubcy0522.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://githubcy0522.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -25,15 +25,6 @@ DI，可以注入什么数据类型 1.字面量 -&amp;gt;基本数据类型和�
 4.数组、集合
 特殊字符，解决方式：1.使用实体引用 2. &amp;lt;![CDATA[特殊字符]]&amp;gt;
 1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&amp;quot;获取用户信息!&amp;quot;); return userDao.findUser(uname, password); } }  2.</description>
-    </item>
-    
-    <item>
-      <title>归档</title>
-      <link>https://githubcy0522.github.io/archives/</link>
-      <pubDate>Sun, 14 Jul 2019 21:31:48 +0800</pubDate>
-      
-      <guid>https://githubcy0522.github.io/archives/</guid>
-      <description></description>
     </item>
     
   </channel>

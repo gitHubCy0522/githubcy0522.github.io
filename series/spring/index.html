@@ -7,22 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Tags | 新人来也匆匆的博客</title>
-    <meta property="og:title" content="Tags - 新人来也匆匆的博客">
+    <title>Spring | 新人来也匆匆的博客</title>
+    <meta property="og:title" content="Spring - 新人来也匆匆的博客">
     <meta property="og:type" content="article">
         
         
     <meta name="Keywords" content="">
-    <meta name="description" content="Tags">
+    <meta name="description" content="Spring">
         
     <meta name="author" content="新人来也匆匆">
-    <meta property="og:url" content="https://githubcy0522.github.io/tags/">
+    <meta property="og:url" content="https://githubcy0522.github.io/series/spring/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://githubcy0522.github.io/tags/index.xml" title="新人来也匆匆的博客" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://githubcy0522.github.io/series/spring/index.xml" title="新人来也匆匆的博客" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -63,23 +63,46 @@
         <div class="col-group">
 
             <div class="col-8" id="main">
-                <header>
+                <div class="res-cons">
                     
-                        <h1>共有1个标签</h1>
+
                     
-                </header>
-                <div class="post-archive">
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://githubcy0522.github.io/post/blog/">Spring核心概念</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年7月14日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
+又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
+DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
+2.null 或空字符串
+3.引用类型(对象)、内部bean
+4.数组、集合
+特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
+1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2.……
+                                <p class="readmore"><a href="https://githubcy0522.github.io/post/blog/">阅读全文</a></p>
+                            </div>
+                        </article>
                     
-                    <h2><a href="https://githubcy0522.github.io/tags/spring">spring</a> (1)</h2>
-                    <ul class="listing">
-                        
-                        <li>
-                            <span class="date">2019/07/14</span>
-                            <a href="https://githubcy0522.github.io/post/blog/" title="Spring核心概念">Spring核心概念</a>
-                        </li>
-                        
-                    </ul>
+
                     
+
+
+
+
 
                 </div>
             </div>

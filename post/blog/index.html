@@ -1,74 +1,96 @@
 <!doctype html>
-<html lang="en-us">
-  <head>
-    <title>Spring核心概念 // My New Hugo Site</title>
-    <meta charset="utf-8" />
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
     <meta name="generator" content="Hugo 0.55.6" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="John Doe" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" href="https://githubcy0522.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Spring核心概念 | 新人来也匆匆的博客</title>
+    <meta property="og:title" content="Spring核心概念 - 新人来也匆匆的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-07-14T21:31:48&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-07-14T21:31:48&#43;08:00">
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Spring核心概念">
+        
+    <meta name="author" content="新人来也匆匆">
+    <meta property="og:url" content="https://githubcy0522.github.io/post/blog/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Spring核心概念"/>
-<meta name="twitter:description" content="Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
-又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
-DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
-2.null 或空字符串
-3.引用类型(对象)、内部bean
-4.数组、集合
-特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
-1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2."/>
-
-    <meta property="og:title" content="Spring核心概念" />
-<meta property="og:description" content="Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
-又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
-DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
-2.null 或空字符串
-3.引用类型(对象)、内部bean
-4.数组、集合
-特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
-1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://githubcy0522.github.io/post/blog/" />
-<meta property="article:published_time" content="2019-07-14T21:31:48&#43;08:00"/>
-<meta property="article:modified_time" content="2019-07-14T21:31:48&#43;08:00"/>
 
 
-  </head>
-  <body>
-    <header class="app-header">
-      <a href="https://githubcy0522.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
-      <h1>My New Hugo Site</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
-      <div class="app-header-social">
-        
-      </div>
-    </header>
-    <main class="app-container">
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class ="post-title">Spring核心概念</h1>
-      <div class="post-meta">
-        <div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
-  <title>calendar</title>
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
-</svg>
-          Jul 14, 2019
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://githubcy0522.github.io/">
+                        新人来也匆匆的博客
+                    </a>
+                
+                <p class="description">热爱互联网IT行业，从事java。梦想着从菜鸟晋级老鸟</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://githubcy0522.github.io/">首页</a>
+                    
+                    <a  href="https://githubcy0522.github.io/archives/" title="归档">归档</a>
+                    
+                </nav>
+            </div>
         </div>
-        <div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
-  <title>clock</title>
-  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
-</svg>
-          5 min read
-        </div></div>
-    </header>
-    <div class="post-content">
-      
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Spring核心概念</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年7月14日
+                        </date>
+                        
+                        <div class="post-meta">
+                            <span>|</span>
+                            
+                                <span class="meta-category"><a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a></span>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <div class="post-content">
+                            
 
 <h1 id="spring核心概念">Spring核心概念</h1>
 
@@ -619,12 +641,132 @@ public class Client {
 
 </code></pre>
 
-    </div>
-    <div class="post-footer">
-      
-    </div>
-  </article>
+                        </div>
 
-    </main>
-  </body>
+                        
+
+
+                        
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://githubcy0522.github.io/tags/spring">Spring</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://githubcy0522.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/post/blog/" title="Spring核心概念">Spring核心概念</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://githubcy0522.github.io/categories/spring%E5%85%A8%E5%AE%B6%E6%A1%B6/">spring全家桶(1)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://githubcy0522.github.io/tags/spring/">spring</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://www.baidu.com" title="百度">百度</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://githubcy0522.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://githubcy0522.github.io/">新人来也匆匆的博客 By 新人来也匆匆</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+    
+    (function(){
+        $("pre code").parent().addClass("line-numbers")
+    }())
+
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
 </html>
