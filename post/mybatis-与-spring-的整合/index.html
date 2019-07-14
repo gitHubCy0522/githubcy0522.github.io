@@ -833,61 +833,61 @@ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd&quot;&gt;
 
 <p>在类中必须使用 @Transactional 注解元素进行标识</p>
 
-<pre><code class="language-java">package cn.mybatisspring.service.impl;
+<p>```java
+package cn.mybatisspring.service.impl;</p>
 
-import java.util.ArrayList;
+<p>import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.List;</p>
 
-import org.springframework.transaction.annotation.Transactional;
+<p>import org.springframework.transaction.annotation.Transactional;</p>
 
-import cn.mybatisspring.dao.UserDao;
+<p>import cn.mybatisspring.dao.UserDao;
 import cn.mybatisspring.entity.User;
-import cn.mybatisspring.service.UserService;
+import cn.mybatisspring.service.UserService;</p>
 
-@Transactional
-public class UserServiceImpl implements UserService {
+<p>@Transactional
+public class UserServiceImpl implements UserService {</p>
 
-	private UserDao userDao;
+<pre><code>private UserDao userDao;
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-
-	@Transactional(readOnly=true)
-	public User findUserByNamePwd(String name, String pwd) {
-
-		return userDao.getUserByNamePwd(name, pwd);
-	}
-
-	public List&lt;User&gt; findUserByNameRId(String name, Integer rid,
-			Integer pageIndex, Integer pageSize) {
-
-		return userDao.getUserByNameRId(name, rid, (pageIndex-1)*pageSize, pageSize);
-	}
-
-	@Transactional
-	public Integer addUser(User user) {
-		if (user == null) {
-			return null;
-		}
-		User user2 = userDao.getUserByName(user.getUserName());
-		//判断用户名是否可用
-		if (user2 == null) {
-			return userDao.insert(Arrays.asList(user));
-		}
-		return null;
-	}
-
-	@Transactional
-	public Integer deleteUser(Long uid) {
-
-		return userDao.delete(uid);
-	}
-
+public void setUserDao(UserDao userDao) {
+    this.userDao = userDao;
 }
 
+@Transactional(readOnly=true)
+public User findUserByNamePwd(String name, String pwd) {
+
+    return userDao.getUserByNamePwd(name, pwd);
+}
+
+public List&lt;User&gt; findUserByNameRId(String name, Integer rid,
+        Integer pageIndex, Integer pageSize) {
+
+    return userDao.getUserByNameRId(name, rid, (pageIndex-1)*pageSize, pageSize);
+}
+
+@Transactional
+public Integer addUser(User user) {
+    if (user == null) {
+        return null;
+    }
+    User user2 = userDao.getUserByName(user.getUserName());
+    //判断用户名是否可用
+    if (user2 == null) {
+        return userDao.insert(Arrays.asList(user));
+    }
+    return null;
+}
+
+@Transactional
+public Integer deleteUser(Long uid) {
+
+    return userDao.delete(uid);
+}
 </code></pre>
+
+<p>}</p>
 
                         </div>
 
