@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Spring核心概念 // My New Hugo Site</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://githubcy0522.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring核心概念"/>
+<meta name="twitter:description" content="Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
+又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
+DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
+2.null 或空字符串
+3.引用类型(对象)、内部bean
+4.数组、集合
+特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
+1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2."/>
+
+    <meta property="og:title" content="Spring核心概念" />
+<meta property="og:description" content="Spring核心概念 3.核心概念之IOC IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的控制权，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转
+又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。
+DI，可以注入什么数据类型 1.字面量 -&gt;基本数据类型和字符串
+2.null 或空字符串
+3.引用类型(对象)、内部bean
+4.数组、集合
+特殊字符，解决方式：1.使用实体引用 2. &lt;![CDATA[特殊字符]]&gt;
+1.设置注入，是指通过setter注入依赖对象 package cn.bdqn.service.impl; import java.sql.SQLException; import cn.bdqn.dao.UserDao; import cn.bdqn.dao.impl.UserDaoImpl; import cn.bdqn.entity.User; import cn.bdqn.service.UserService; public class UserServiceImpl implements UserService { /** * 降低对象之间耦合度？ */ // private UserDao userDao = new UserDaoImpl(null); private UserDao userDao; public void setUserDao(UserDao userDao) { this.userDao = userDao; } public User findUser(String uname, String password) throws SQLException { System.out.println(&quot;获取用户信息!&quot;); return userDao.findUser(uname, password); } }  2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://githubcy0522.github.io/post/blog/" />
+<meta property="article:published_time" content="2019-07-14T21:31:48&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-14T21:31:48&#43;08:00"/>
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://githubcy0522.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>My New Hugo Site</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Spring核心概念</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jul 14, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          5 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="spring核心概念">Spring核心概念</h1>
+
+<h2 id="3-核心概念之ioc">3.核心概念之IOC</h2>
+
+<p>IOC（控制反转），为了降低程序对象之间的耦合度，spring把对象的创建和维护的<strong>控制权</strong>，由应用程序转移到部第三方工厂或spring容器中，这样控制权的转移，称为控制反转</p>
+
+<p>又称为（依赖注入），spring容器启动时，spring会根据依赖对象之间的关系，将依赖对象注入到组件中。</p>
+
+<h2 id="di-可以注入什么数据类型">DI，可以注入什么数据类型</h2>
+
+<p>1.字面量 -&gt;基本数据类型和字符串</p>
+
+<p>2.null 或空字符串</p>
+
+<p>3.引用类型(对象)、内部bean</p>
+
+<p>4.数组、集合</p>
+
+<p>特殊字符，解决方式：1.使用<strong>实体引用</strong>  2. &lt;![CDATA[特殊字符]]&gt;</p>
+
+<h4 id="1-设置注入-是指通过setter注入依赖对象"><strong>1</strong>.设置注入，是指通过setter注入依赖对象</h4>
+
+<pre><code class="language-java">package cn.bdqn.service.impl;
+
+import java.sql.SQLException;
+
+import cn.bdqn.dao.UserDao;
+import cn.bdqn.dao.impl.UserDaoImpl;
+import cn.bdqn.entity.User;
+import cn.bdqn.service.UserService;
+
+public class UserServiceImpl implements UserService {
+
+	/**
+	 * 降低对象之间耦合度？
+	 */
+	// private UserDao userDao = new UserDaoImpl(null);
+	private UserDao userDao;
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	public User findUser(String uname, String password) throws SQLException {
+		System.out.println(&quot;获取用户信息!&quot;);
+		return userDao.findUser(uname, password);
+	}
+
+}
+</code></pre>
+
+<p>2.在容器中使用property元素进行设值注入</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- spring配置文件beans根元素 --&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+	&lt;!-- 翻译是土豆,叫组件! spring 把一切可以实例化的类 称为bean --&gt;
+	
+	&lt;!-- 定义UserDao Bean(实例)
+		private UserDao userDao = new UserDaoImpl();
+	 --&gt;
+	 &lt;!-- 存在依赖关系 --&gt;
+	&lt;bean id=&quot;userDao1&quot; class=&quot;cn.bdqn.dao.impl.UserDaoImpl&quot;&gt;	
+	&lt;/bean&gt;
+	
+	&lt;!-- 定义UserService Bean(实例)
+		private UserService userService = new UserServiceImpl();
+	 --&gt;
+	&lt;bean id=&quot;userService&quot; class=&quot;cn.bdqn.service.impl.UserServiceImpl&quot;&gt;
+		&lt;!--name = 依赖的属性名 setXxx xxx 例如setUserDao userDao
+			ref = &quot;bean id&quot;
+		 --&gt;
+		&lt;property name=&quot;userDao&quot; ref=&quot;userDao1&quot;/&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+
+<pre><code class="language-xml">	&lt;!-- 定义User实例 Bean
+		User user = new User();
+	 --&gt;
+	&lt;bean id=&quot;user&quot; class=&quot;cn.bdqn.entity.User&quot;&gt;
+		&lt;property name=&quot;uid&quot; value=&quot;10&quot;/&gt;
+		&lt;property name=&quot;uname&quot;&gt;
+			&lt;!-- &lt;value&gt;&amp;lt;小张&lt;/value&gt; --&gt;
+			&lt;value&gt;&lt;![CDATA[&lt;小张]]&gt;&lt;/value&gt;
+		&lt;/property&gt;
+		&lt;property name=&quot;upwd&quot;&gt;
+		&lt;!-- 	&lt;value&gt;&lt;/value&gt; --&gt;
+		&lt;null&gt;&lt;/null&gt;
+		&lt;/property&gt;
+		&lt;!-- 注入topic --&gt;
+		&lt;!-- &lt;property name=&quot;topic&quot; ref=&quot;topic&quot;&gt;&lt;/property&gt; --&gt;
+		&lt;property name=&quot;topic&quot;&gt;
+			&lt;bean class=&quot;cn.bdqn.entity.Topic&quot;&gt;
+				&lt;property name=&quot;tid&quot;&gt;
+						&lt;value&gt;5&lt;/value&gt;
+				&lt;/property&gt;
+				&lt;property name=&quot;tname&quot;&gt;
+						&lt;value&gt;游戏&lt;/value&gt;
+				&lt;/property&gt;
+			&lt;/bean&gt;
+		&lt;/property&gt;
+		
+		&lt;!-- 注入数组 --&gt;
+		&lt;property name=&quot;cardArray&quot;&gt;
+			&lt;array value-type=&quot;java.lang.String&quot;&gt;
+				&lt;value&gt;1&lt;/value&gt;
+				&lt;value&gt;9&lt;/value&gt;
+				&lt;value&gt;9&lt;/value&gt;
+				&lt;value&gt;9&lt;/value&gt;
+			&lt;/array&gt;
+		&lt;/property&gt;
+		
+		&lt;!-- 注入List --&gt;
+		&lt;property name=&quot;likes&quot;&gt;
+			&lt;list value-type=&quot;java.lang.String&quot;&gt;
+				&lt;value&gt;写代码&lt;/value&gt;
+				&lt;value&gt;打游戏&lt;/value&gt;
+				&lt;value&gt;旅游&lt;/value&gt;
+				&lt;value&gt;睡觉&lt;/value&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+		
+		&lt;!-- 注入Map --&gt;
+		&lt;property name=&quot;map&quot;&gt;
+			&lt;map key-type=&quot;java.lang.Object&quot; value-type=&quot;java.lang.String&quot;&gt;
+				&lt;entry key=&quot;出生年&quot;&gt;&lt;value&gt;1999&lt;/value&gt;&lt;/entry&gt;
+				&lt;entry key=&quot;出生月&quot;&gt;&lt;value&gt;05&lt;/value&gt;&lt;/entry&gt;
+				&lt;entry key=&quot;出生日&quot;&gt;&lt;value&gt;22&lt;/value&gt;&lt;/entry&gt;
+			&lt;/map&gt;
+		&lt;/property&gt;
+		
+		&lt;!-- 注入Set --&gt;
+		&lt;property name=&quot;kills&quot;&gt;
+			&lt;set&gt;
+				&lt;value&gt;编程&lt;/value&gt;
+				&lt;value&gt;嘴强王者&lt;/value&gt;
+			&lt;/set&gt;
+		&lt;/property&gt;
+		
+		&lt;!-- 注入Properties --&gt;
+		&lt;property name=&quot;properties&quot;&gt;
+			&lt;props&gt;
+				&lt;prop key=&quot;1&quot;&gt;我叫渣渣辉&lt;/prop&gt;
+				&lt;prop key=&quot;2&quot;&gt;来自贪玩蓝月&lt;/prop&gt;
+			&lt;/props&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+</code></pre>
+
+<h4 id="2-构造注入-通过构造函数-注入-依赖属性"><strong>2</strong>、构造注入，通过构造函数 注入 依赖属性</h4>
+
+<p>1.提供 依赖属性的构造函数 和 无参的构造函数</p>
+
+<pre><code class="language-java">package cn.bdqn.service.impl;
+
+import java.sql.SQLException;
+
+import cn.bdqn.dao.UserDao;
+import cn.bdqn.dao.impl.UserDaoImpl;
+import cn.bdqn.entity.User;
+import cn.bdqn.service.UserService;
+
+public class UserServiceImpl implements UserService {
+
+	/**
+	 * 降低对象之间耦合度？
+	 */
+	// private UserDao userDao = new UserDaoImpl(null);
+	private UserDao userDao;
+	
+	public UserServiceImpl() {
+		super();
+	}
+
+	public UserServiceImpl(UserDao userDao) {
+		super();
+		this.userDao = userDao;
+	}
+
+	public User findUser(String uname, String password) throws SQLException {
+		System.out.println(&quot;获取用户信息!&quot;);
+		return userDao.findUser(uname, password);
+	}
+
+}
+
+</code></pre>
+
+<p>2.在spring容器中使用constructor-arg元素进行注入</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- spring配置文件beans根元素 --&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+	&lt;!-- 翻译是土豆,叫组件! spring 把一切可以实例化的类 称为bean --&gt;
+	
+	&lt;bean id=&quot;userDao&quot; class=&quot;cn.bdqn.dao.impl.UserDaoImpl&quot;/&gt;
+	
+	&lt;bean id=&quot;userService&quot; class=&quot;cn.bdqn.service.impl.UserServiceImpl&quot;&gt;
+		&lt;!-- constructor-arg 对应一个 构造函数  一个参数 --&gt;
+		&lt;constructor-arg index=&quot;0&quot; ref=&quot;userDao&quot;/&gt;
+	&lt;/bean&gt;
+	
+	&lt;bean id=&quot;user&quot; class=&quot;cn.bdqn.entity.User&quot;&gt;
+		&lt;!-- &lt;constructor-arg index=&quot;0&quot; value=&quot;1&quot;/&gt;
+		&lt;constructor-arg index=&quot;1&quot; value=&quot;小high&quot;/&gt;
+		&lt;constructor-arg index=&quot;2&quot;&gt;&lt;value&gt;000000&lt;/value&gt;&lt;/constructor-arg&gt; --&gt;
+		
+		&lt;constructor-arg type=&quot;int&quot; value=&quot;1&quot;/&gt;
+		&lt;constructor-arg type=&quot;String&quot; value=&quot;小high&quot;/&gt;
+		&lt;constructor-arg type=&quot;String&quot;&gt;&lt;value&gt;000000&lt;/value&gt;&lt;/constructor-arg&gt;
+	&lt;/bean&gt;
+	
+&lt;/beans&gt;
+
+</code></pre>
+
+<p>设值注入和构造注入的区别</p>
+
+<p><img src="D:KJJAVAY2捕获.PNG" alt="" /></p>
+
+<p><strong>3</strong>、p命名空间注入 ，p命名空间属性 进行依赖对象的注入；依赖于属性的setter方法！</p>
+
+<p>好处：减少配置量</p>
+
+<p>缺点：处理不了特殊字符</p>
+
+<p>1.引入p命名空间</p>
+
+<pre><code class="language-xml">xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+</code></pre>
+
+<p>2.根据语法 进行注入</p>
+
+<p>注入直接量（基本数据类型）；语法是：p:属性名=&ldquo;属性值&rdquo;</p>
+
+<pre><code class="language-xml">&lt;bean id=&quot;user&quot; class=&quot;cn.bdqn.entity.User&quot; p:uid=&quot;10&quot; p:uname=&quot;小强&quot; p:upwd=&quot;000000&quot; /&gt;
+</code></pre>
+
+<p>注入引用类型；语法是：p:属性名-ref=&ldquo;Bean的id&rdquo;</p>
+
+<pre><code class="language-xml">&lt;bean id=&quot;userDao&quot; class=&quot;cn.bdqn.dao.impl.UserDaoImpl&quot; /&gt;
+	
+&lt;bean id=&quot;userService&quot; class=&quot;cn.bdqn.service.impl.UserServiceImpl&quot; p:userDao-ref=&quot;userDao&quot; /&gt;
+</code></pre>
+
+<p><strong>4</strong>、ioc注解注入</p>
+
+<h2 id="aop-面向切面编程完成系统日志记录">AOP 面向切面编程完成系统日志记录</h2>
+
+<p>1、简单点说，就是在不修改原程序基础之上，添加新的代码、新的业务，进行增强处理。</p>
+
+<p>代理模式中。。。。。。</p>
+
+<p>将公共问题集中解决！</p>
+
+<h3 id="spring-aop实现系统日志记录">Spring AOP实现系统日志记录</h3>
+
+<h4 id="1-下载spring-aop-资源包导入当前工程环境中">1、下载spring aop 资源包导入当前工程环境中！</h4>
+
+<p><strong>aopalliance-1.0.jar</strong></p>
+
+<p><strong>aspectjweaver-1.6.9.jar</strong></p>
+
+<p><strong>spring-aop-3.2.13.RELEASE.jar</strong></p>
+
+<h4 id="2-编写增强处理类">2.编写增强处理类</h4>
+
+<p>​   前置增强</p>
+
+<pre><code class="language-java">/**
+	 * 前置增强方法
+	 * @param jp 连接点
+	 */
+	public void befor(JoinPoint jp){
+		logger.debug(jp.getSignature().getName()+&quot;方法开始执行,参数列表是:&quot;+Arrays.toString(jp.getArgs()));
+	}
+</code></pre>
+
+<p>​   后置增强</p>
+
+<pre><code class="language-java">/**
+	 * 后置增强方法
+	 * @param jp
+	 * @param result 返回值
+	 */
+	public void afterReturing(JoinPoint jp,Object result){
+		logger.debug(jp.getSignature().getName()+&quot;执行完毕,参数列表是:&quot;+Arrays.toString(jp.getArgs())+&quot;,方法返回值是:&quot;+result);
+	}
+</code></pre>
+
+<p>​   异常增强</p>
+
+<pre><code class="language-java">/**
+	 * 异常增强方法
+	 * @param jp
+	 * @param e 最大的异常
+	 */
+	public void throwing(JoinPoint jp,Throwable e){
+		logger.error(jp.getSignature().getName()+&quot;方法执行失败！出现异常!&quot;,e);
+	}
+</code></pre>
+
+<p>​   最终增强</p>
+
+<pre><code class="language-java">/**
+	 * 最终增强方法
+	 * @param jp
+	 */
+	public void after(JoinPoint jp){
+		logger.debug(jp.getSignature().getName()+&quot;方法,资源释放完毕!&quot;);
+	}
+</code></pre>
+
+<p>​   环绕增强</p>
+
+<pre><code class="language-java">/**
+	 * 环绕增强方法
+	 * @param jp 连接点
+	 */
+	public Object around(ProceedingJoinPoint jp){
+			Object object = null;
+		try {
+			//前置增强
+			logger.debug(jp.getSignature().getName()+&quot;方法开始执行,参数列表是:&quot;+Arrays.toString(jp.getArgs()));
+			//直接访问原对象的方法
+			jp.proceed();
+			//后置增强
+			logger.debug(jp.getSignature().getName()+&quot;执行完毕,参数列表是:&quot;+Arrays.toString(jp.getArgs())+&quot;,方法返回值是:&quot;+object);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			//异常增强
+			logger.error(jp.getSignature().getName()+&quot;方法执行失败！出现异常!&quot;,e);
+		}finally{
+			//最终增强
+			logger.debug(jp.getSignature().getName()+&quot;方法,资源释放完毕!&quot;);
+		}
+		return object;
+	}
+</code></pre>
+
+<h4 id="aop实现方式">AOP实现方式：</h4>
+
+<h5 id="1-使用-schema-方式">1、使用 schema 方式</h5>
+
+<p>是指通过 schema 标签将一个普通 javaBean 定义为 增强类</p>
+
+<pre><code class="language-java">package cn.bdqn.common;
+
+import java.util.Arrays;
+
+import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+/**
+ * 日志增强类
+ * @author Administrator
+ *
+ */
+public class LoggerAdivce {
+	
+	private Logger logger = Logger.getLogger(LoggerAdivce.class);
+	
+	/**
+	 * 前置增强方法
+	 * @param jp 连接点
+	 */
+	public void befor(JoinPoint jp){
+		logger.debug(jp.getSignature().getName()+&quot;方法开始执行,参数列表是:&quot;+Arrays.toString(jp.getArgs()));
+	}
+	
+	/**
+	 * 后置增强方法
+	 * @param jp
+	 * @param result 返回值
+	 */
+	public void afterReturing(JoinPoint jp,Object result){
+		logger.debug(jp.getSignature().getName()+&quot;方法执行完毕,参数列表是:&quot;+Arrays.toString(jp.getArgs())+&quot;,方法返回值是:&quot;+result);
+	}
+	
+	/**
+	 * 异常增强方法
+	 * @param jp
+	 * @param e 最大的异常
+	 */
+	public void throwing(JoinPoint jp,Throwable e){
+		logger.error(jp.getSignature().getName()+&quot;方法执行失败！出现异常!&quot;,e);
+	}
+	
+	/**
+	 * 最终增强方法
+	 * @param jp
+	 */
+	public void after(JoinPoint jp){
+		logger.debug(jp.getSignature().getName()+&quot;方法,资源释放完毕!&quot;);
+	}
+	
+	/**
+	 * 环绕增强方法
+	 * @param jp 连接点
+	 */
+	public Object around(ProceedingJoinPoint jp){
+			Object object = null;
+		try {
+			//前置增强
+			logger.debug(jp.getSignature().getName()+&quot;方法开始执行,参数列表是:&quot;+Arrays.toString(jp.getArgs()));
+			//直接访问原对象的方法
+			jp.proceed();
+			//后置增强
+			logger.debug(jp.getSignature().getName()+&quot;执行完毕,参数列表是:&quot;+Arrays.toString(jp.getArgs())+&quot;,方法返回值是:&quot;+object);
+		} catch (Throwable e) {
+			e.printStackTrace();
+			//异常增强
+			logger.error(jp.getSignature().getName()+&quot;方法执行失败！出现异常!&quot;,e);
+		}finally{
+			//最终增强
+			logger.debug(jp.getSignature().getName()+&quot;方法,资源释放完毕!&quot;);
+		}
+		return object;
+	}
+	
+}
+
+
+</code></pre>
+
+<h5 id="2-使用注解方式">2、使用注解方式</h5>
+
+<p>是指通过 AspectJ 注解插件的注解元素将一个普通的 JavaBean 定义为增强类</p>
+
+<pre><code class="language-java">/**
+ * 
+ */
+package cn.bdqn.common;
+
+import java.util.Arrays;
+
+import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+/**
+ * @author Administrator
+ *
+ */
+@Aspect
+public class LoggerAnnotationAdvice {
+	
+private Logger logger = Logger.getLogger(LoggerAnnotationAdvice.class);
+	
+	/**
+	 * 前置增强方法
+	 * @param jp 连接点
+	 */
+	@Before(value=&quot;execution(* cn.bdqn.service..*.*(..))&quot;)
+	public void befor(JoinPoint jp){
+		logger.debug(jp.getSignature().getName()+&quot;方法开始执行,参数列表是:&quot;+Arrays.toString(jp.getArgs()));
+	}
+	
+	/**
+	 * 后置增强方法
+	 * @param jp
+	 * @param result 返回值
+	 */
+    @AfterReturning(pointcut=&quot;execution(* cn.bdqn.service..*.*(..))&quot;,returning=&quot;result&quot;)
+	public void afterReturing(JoinPoint jp,Object result){
+		logger.debug(jp.getSignature().getName()+&quot;方法执行完毕,参数列表是:&quot;+Arrays.toString(jp.getArgs())+&quot;,方法返回值是:&quot;+result);
+	}
+}
+
+</code></pre>
+
+<pre><code class="language-xml">&lt;bean class=&quot;cn.bdqn.common.LoggerAnnotationAdvice&quot;&gt;&lt;/bean&gt;
+	&lt;!-- 让 aspectj 注解插件注解元素生效 --&gt;
+	&lt;aop:aspectj-autoproxy /&gt;
+</code></pre>
+
+<h5 id="3-aop配置">3、aop配置</h5>
+
+<h6 id="1-引入aop命名空间">1、引入aop命名空间</h6>
+
+<pre><code class="language-xml">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+&lt;/beans&gt;
+</code></pre>
+
+<h6 id="2-在-spring-配置文件中配置-aop">2、在 spring 配置文件中配置 aop</h6>
+
+<pre><code class="language-xml">
+    &lt;!-- 增强类的bean --&gt;
+	&lt;bean id=&quot;loggerAdivce&quot; class=&quot;cn.bdqn.common.LoggerAdivce&quot;&gt;&lt;/bean&gt;
+	
+	&lt;!-- aop配置 --&gt;
+	&lt;aop:config&gt;
+		&lt;!-- 切入点:对哪些类的哪些方法,需要增强 --&gt;
+		&lt;aop:pointcut expression=&quot;execution(* cn.bdqn.service..*.*(..))&quot; id=&quot;pointcut&quot;/&gt;
+		&lt;!-- schema --&gt;
+		&lt;aop:aspect ref=&quot;loggerAdivce&quot;&gt;
+			&lt;!-- &lt;aop:before method=&quot;befor&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+			&lt;aop:after-returning method=&quot;afterReturing&quot; pointcut-ref=&quot;pointcut&quot; returning=&quot;result&quot;/&gt;
+			&lt;aop:after-throwing method=&quot;throwing&quot; pointcut-ref=&quot;pointcut&quot; throwing=&quot;e&quot;/&gt;
+			&lt;aop:after method=&quot;after&quot; pointcut-ref=&quot;pointcut&quot;/&gt; --&gt;
+            &lt;!-- 环绕增强 --&gt;
+			&lt;aop:around method=&quot;around&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+		&lt;/aop:aspect&gt;
+	&lt;/aop:config&gt;
+
+</code></pre>
+
+<h6 id="测试">测试：</h6>
+
+<pre><code class="language-java">package cn.bdqn;
+
+import java.sql.SQLException;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import cn.bdqn.entity.User;
+import cn.bdqn.service.UserService;
+
+public class Client {
+	
+	public static void main(String[] args) throws SQLException {
+		//spring上下文对象
+		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+		UserService userService = (UserService) ac.getBean(&quot;userService&quot;);
+		userService.findUser(&quot;大佬&quot;, &quot;牛逼&quot;);
+	/*	userService.login(&quot;开始&quot;,&quot;征途！&quot;);*/
+	}
+}
+
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
